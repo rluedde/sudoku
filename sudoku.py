@@ -26,23 +26,32 @@ class Sudoku:
                      ["0", "0", "0", "0", "0", "0", "0", "0", "0"]]
 
 
+
+    # Have to be careful to not edit self.grid at all (i.e don't 
+    # insert any "|")
     def print_grid(self):
         row_sep = "-------------"
         for i in range(9):
-            line = self.grid[i] 
+            line = "".join(self.grid[i])
             elements_passed = 0
             if i % 3 == 0:
                 print(row_sep)
-            for z in range(13): 
-                if elements_passed == 3 or z == 0:
-                    line.insert(z, "|")
-                    elements_passed = 0
-                else:
-                    elements_passed += 1
-            print("".join(line))
-        print(row_sep)
+            line = f"|{line[0:3]}|{line[3:6]}|{line[6:9]}|"
+            print(line)
+        print(row_sep) # Print last set of dashes
+
+
+
+    def make_guess(self, row, col, guess):
+        # Reindex row and col so they make sense to user 
+        row -= 1
+        col -= 1
+        self.grid[row][col] = guess
+
 
 
 
 game = Sudoku()
+game.print_grid()
+game.make_guess(3, 1, "8")
 game.print_grid()
