@@ -1,30 +1,30 @@
-# Ideas for this: 
-#    -An algo that solves a puzzle that you put in
+# Big-picture ideas for this: 
+#   -An algo that solves a puzzle that you put in
 #   -An algo that creates solvable puzzles
+#       -aka generates a grid
 #   -some graphics to make this playable by a user
 #   -Option to choose between 9 unique letters or 9 unique numbers
 #       -Maybe figure out how to use ASCII emojis lol
 #   -Incorporate a database?
 #       -What games the algo can solve the fastest?
 #       -If I do a UI, store the order of the user's moves?
-#   -Use OOP to represent the grid?
+#   -Use OOP to represent the game
 
+import numpy as np
 
 class Sudoku:
 
 
     def __init__(self):
-        self.grid = [["0", "0", "0", "0", "0", "0", "0", "0", "0"], 
-                     ["0", "0", "0", "0", "0", "0", "0", "0", "0"],
-                     ["0", "0", "0", "0", "0", "0", "0", "0", "0"],
-                     ["0", "0", "0", "0", "0", "0", "0", "0", "0"],
-                     ["0", "0", "0", "0", "0", "0", "0", "0", "0"],
-                     ["0", "0", "0", "0", "0", "0", "0", "0", "0"],
-                     ["0", "0", "0", "0", "0", "0", "0", "0", "0"],
-                     ["0", "0", "0", "0", "0", "0", "0", "0", "0"],
-                     ["0", "0", "0", "0", "0", "0", "0", "0", "0"],
-                     ["0", "0", "0", "0", "0", "0", "0", "0", "0"]]
-
+        self.grid = np.array([["1", "2", "3", "4", "5", "6", "7", "8", "8"], 
+                              ["2", "0", "0", "0", "0", "0", "0", "0", "0"],
+                              ["3", "0", "0", "0", "0", "0", "0", "0", "0"],
+                              ["4", "0", "0", "0", "0", "0", "0", "0", "0"],
+                              ["5", "0", "0", "0", "0", "0", "0", "0", "0"],
+                              ["6", "0", "0", "0", "0", "0", "0", "0", "0"],
+                              ["7", "0", "0", "0", "0", "0", "0", "0", "0"],
+                              ["8", "0", "0", "0", "0", "0", "0", "0", "0"],
+                              ["9", "0", "0", "0", "0", "0", "0", "0", "0"]])
 
 
     # Have to be careful to not edit self.grid at all (i.e don't 
@@ -41,17 +41,61 @@ class Sudoku:
         print(row_sep) # Print last set of dashes
 
 
-
     def make_guess(self, row, col, guess):
         # Reindex row and col so they make sense to user 
         row -= 1
         col -= 1
-        self.grid[row][col] = guess
+        self.grid[row, col] = guess
+
+    
+    # Makes sure that a column contains only unique characters
+    # Returns True if the column is all unique, False otherwise
+    def col_clear(self, col_index):
+        uniques = np.unique(self.grid[:,col_index])
+        if len(uniques) == 9:
+            return True
+        else:
+            return False 
 
 
+    # Makes sure that a row contains only unique characters
+    # Returns True is the row is all unique, False otherwise
+    def row_clear(self, row_index):
+        uniques = np.unique(self.grid[row_index, :])
+        if len(uniques) == 9:
+            return True
+        else:
+            return False
+
+    # Iteratively calls col_clear and row_clear on all 9 cols to 
+    # make sure they each only contain unique values. 
+    # True if all rows and columns contain uniques, False otherwise
+    def rows_cols_clear(self):
+        for i in range(9):
+            if self.row_clear(i) == False or self.col_clear(i) == False:
+                print(i)
+                return False
+        return True
+
+
+
+    # Makes sure that each 3x3 quadrant contains unique values
+    # Returns True if the quadrant is all unique, False otherwise
+    def quadrant_clear():
+        pass
+
+
+    # Iteratively calls row_clear on all 9 rows to make sure they
+    # each only contain unique values. 
+    # True if all quadrants contain uniques, False otherwise
+    def all_quadrants_clear(self):
+        pass
+
+
+    def all_clear():
+        pass
 
 
 game = Sudoku()
 game.print_grid()
-game.make_guess(3, 1, "8")
-game.print_grid()
+print(game.rows_cols_clear())
