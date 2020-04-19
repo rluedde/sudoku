@@ -17,8 +17,8 @@ class Sudoku:
 
     def __init__(self):
         self.grid = np.array([["1", "2", "3", "4", "5", "6", "7", "8", "8"], 
-                              ["2", "0", "0", "0", "0", "0", "0", "0", "0"],
-                              ["3", "0", "0", "0", "0", "0", "0", "0", "0"],
+                              ["5", "4", "6", "0", "0", "0", "0", "0", "0"],
+                              ["9", "8", "7", "0", "0", "0", "0", "0", "0"],
                               ["4", "0", "0", "0", "0", "0", "0", "0", "0"],
                               ["5", "0", "0", "0", "0", "0", "0", "0", "0"],
                               ["6", "0", "0", "0", "0", "0", "0", "0", "0"],
@@ -70,32 +70,46 @@ class Sudoku:
     # Iteratively calls col_clear and row_clear on all 9 cols to 
     # make sure they each only contain unique values. 
     # True if all rows and columns contain uniques, False otherwise
-    def rows_cols_clear(self):
-        for i in range(9):
-            if self.row_clear(i) == False or self.col_clear(i) == False:
+    # Rows and cols params signify how many rows and columns to 
+    # check - used when checking quadrants
+    def rows_cols_clear(self, rowcols_to_check = 9):
+        for i in range(rowscols_to_check):
+            if not self.row_clear(i) or not self.col_clear(i): 
                 print(i)
                 return False
         return True
 
 
-
-    # Makes sure that each 3x3 quadrant contains unique values
+    # Check if a quadrant contains only uniques
     # Returns True if the quadrant is all unique, False otherwise
-    def quadrant_clear():
-        pass
+    def quadrant_clear(self, beg_row, beg_col):
+        uniques = np.unique(self.grid[beg_row:beg_row+3, beg_col:beg_col+3])
+        if len(uniques) == 9:
+            return True
+        else:
+            return False
 
 
     # Iteratively calls row_clear on all 9 rows to make sure they
     # each only contain unique values. 
     # True if all quadrants contain uniques, False otherwise
+    # There's a better way to do this that doesn't require making
+    # a new array quad_board
+    # Also can probably combine this method with rows_cols_clear()
     def all_quadrants_clear(self):
-        pass
+        # Resize the board to be 3 * 27 for easier iteration.
+        # Be careful of np.resize(arr) vs arr.resize()
+        for i in range(9):
+            beg_col = i % 3
+            beg_row = i - (3 * beg_col)
+            if not self.quadrant_clear(beg_row, beg_col):
+                return False
+        return True
 
 
     def all_clear():
         pass
 
-
 game = Sudoku()
 game.print_grid()
-print(game.rows_cols_clear())
+print(game.all_quadrants_clear())
