@@ -16,23 +16,16 @@ class Sudoku:
 
 
     def __init__(self):
-        self.grid = np.array([["1", "2", "3", "4", "5", "6", "7", "8", "8"], 
-                              ["5", "4", "6", "0", "0", "0", "0", "0", "0"],
-                              ["9", "8", "7", "0", "0", "0", "0", "0", "0"],
-                              ["4", "0", "0", "0", "0", "0", "0", "0", "0"],
-                              ["5", "0", "0", "0", "0", "0", "0", "0", "0"],
-                              ["6", "0", "0", "0", "0", "0", "0", "0", "0"],
-                              ["7", "0", "0", "0", "0", "0", "0", "0", "0"],
-                              ["8", "0", "0", "0", "0", "0", "0", "0", "0"],
-                              ["9", "0", "0", "0", "0", "0", "0", "0", "0"]])
-
+        self.grid = np.full((9,9), 0)
 
     # Have to be careful to not edit self.grid at all (i.e don't 
     # insert any "|")
     def print_grid(self):
         row_sep = "-------------"
         for i in range(9):
-            line = "".join(self.grid[i])
+            # convert each line from an array of ints to a string
+            # thru list comprehension(s) 
+            line = "".join([str(element) for element in self.grid[i]])
             elements_passed = 0
             if i % 3 == 0:
                 print(row_sep)
@@ -110,6 +103,3 @@ class Sudoku:
     def all_clear():
         pass
 
-game = Sudoku()
-game.print_grid()
-print(game.all_quadrants_clear())
