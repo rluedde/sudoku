@@ -46,9 +46,8 @@ class TestSudoku(unittest.TestCase):
             self.fail("print_grid() raised an an Exception unexpectedly!")
 
     def test_col_clear(self):
-        # self.assertFalse(self.g1.col_clear(3))
-        # self.assertTrue(self.g1.col_clear(3))
-        pass
+        self.assertTrue(self.u1.col_clear(3))
+        self.assertFalse(self.g1.col_clear(3))
 
 
 # Allows us to run at command line without extra cmd args
