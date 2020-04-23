@@ -34,11 +34,16 @@ class Sudoku:
         print(row_sep) # Print last set of dashes
 
 
+    # Change element at row, col to guess
     def make_guess(self, row, col, guess):
-        # Reindex row and col so they make sense to user 
-        row -= 1
-        col -= 1
+        # Possible reindex row and col to make more sense
+        # to a user...
+        rg = range(0,9)
+        g_rg = range(1,10)
+        if row not in rg or col not in rg or guess not in g_rg:
+            raise Exception ("Row, col, or guess out of range")
         self.grid[row, col] = guess
+        return self.grid
 
     
     # Makes sure that a column contains only unique characters
