@@ -104,6 +104,15 @@ class TestSudoku(unittest.TestCase):
         self.assertTrue(self.c.all_quadrants_clear())
         self.assertFalse(self.g.all_quadrants_clear())
 
+    def test_game_over(self):
+        
+        self.assertTrue(self.c.game_over())
+        self.c.grid[3,4] = 0
+        self.assertFalse(self.c.game_over())
+        self.assertFalse(self.g.game_over())
+
+
+
 # Allows us to run at command line without extra cmd args
 if __name__ == "__main__":
     unittest.main()

@@ -101,6 +101,13 @@ class Sudoku:
         return True
 
 
-    def all_clear():
-        pass
+    def game_over(self):
+        # If 0 not in grid and all quadrants clear and rowscols clear
+        # then return True?
+        if (0 not in self.grid) & (self.all_quadrants_clear()) &\
+                    (self.rows_cols_clear()):
+            return True
+        return False
+
+
 
