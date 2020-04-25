@@ -69,11 +69,11 @@ class Sudoku:
     # make sure they each only contain unique values. 
     # True if all rows and columns contain uniques, False otherwise
     # Rows and cols params signify how many rows and columns to 
-    # check - used when checking quadrants
-    def rows_cols_clear(self, rowcols_to_check = 9):
+    # check - might be useless 
+    # Eventually return what row/col is a problem if there is one
+    def rows_cols_clear(self, rowscols_to_check = 9):
         for i in range(rowscols_to_check):
             if not self.row_clear(i) or not self.col_clear(i): 
-                print(i)
                 return False
         return True
 
@@ -81,27 +81,23 @@ class Sudoku:
     # Check if a quadrant contains only uniques
     # Returns True if the quadrant is all unique, False otherwise
     def quadrant_clear(self, beg_row, beg_col):
-        uniques = np.unique(self.grid[beg_row:beg_row+3, beg_col:beg_col+3])
+        quadrant = self.grid[beg_row:beg_row+3, beg_col:beg_col+3]
+        uniques = np.unique(quadrant)
         if len(uniques) == 9:
             return True
         else:
             return False
 
 
-    # Iteratively calls row_clear on all 9 rows to make sure they
-    # each only contain unique values. 
+    # Iteratively call quadrant_clear on all 9 quads
     # True if all quadrants contain uniques, False otherwise
-    # There's a better way to do this that doesn't require making
-    # a new array quad_board
-    # Also can probably combine this method with rows_cols_clear()
+    # Can probably combine this method with rows_cols_clear()
+    # Eventually return what quadrant was issue
     def all_quadrants_clear(self):
-        # Resize the board to be 3 * 27 for easier iteration.
-        # Be careful of np.resize(arr) vs arr.resize()
-        for i in range(9):
-            beg_col = i % 3
-            beg_row = i - (3 * beg_col)
-            if not self.quadrant_clear(beg_row, beg_col):
-                return False
+        for beg_col in range(0,9,3):
+            for beg_row in range(0,9,3):
+                if not self.quadrant_clear(beg_row, beg_col):
+                    return False
         return True
 
 
