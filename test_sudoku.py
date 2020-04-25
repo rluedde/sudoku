@@ -32,7 +32,7 @@ class TestSudoku(unittest.TestCase):
     def setUp(self):
         self.zer_arr = empty_grid()
         self.g = Sudoku() # Homogenous grid
-        self.u = Sudoku() # All-unique grid - tbh not rly neccessary
+        self.u = Sudoku() # All-unique grid
         self.c = Sudoku() # Valid, complete Sudoku grid
         self.u.grid = unique_grid()
         self.c.grid = complete_grid() 
@@ -91,13 +91,18 @@ class TestSudoku(unittest.TestCase):
     def test_quadrant_clear(self):
         
         self.assertTrue(self.u.quadrant_clear(0,0))
+        self.assertTrue(self.c.quadrant_clear(0,0))
         self.assertTrue(self.c.quadrant_clear(0,3))
         self.assertTrue(self.c.quadrant_clear(3,3))
         self.assertTrue(self.c.quadrant_clear(3,6))
         self.assertFalse(self.g.quadrant_clear(6,6))
-        
-    # Do all quadrants here
 
+
+    def test_all_quadrants_clear(self):
+
+        self.assertTrue(self.u.all_quadrants_clear())
+        self.assertTrue(self.c.all_quadrants_clear())
+        self.assertFalse(self.g.all_quadrants_clear())
 
 # Allows us to run at command line without extra cmd args
 if __name__ == "__main__":
