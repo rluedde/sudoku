@@ -34,7 +34,8 @@ class Sudoku:
         print(row_sep) # Print last set of dashes
 
 
-    # Change element at row, col to guess
+    
+    # Make sure that row, col and guess are all legal
     def make_guess(self, row, col, guess):
         # Possible reindex row and col to make more sense
         # to a user...
@@ -42,10 +43,26 @@ class Sudoku:
         g_rg = range(1,10)
         if row not in rg or col not in rg or guess not in g_rg:
             raise Exception ("Row, col, or guess out of range")
-        self.grid[row, col] = guess
-        return self.grid
+        if self.grid[row,col] != 0:
+            print("There is already a number there. Go again")
+            return self.grid
+
+        return self.check_guess(row, col, guess)
 
     
+    # Make sure that the guess is legal, if it's not, return the previous 
+    # version of the grid
+    def check_guess(self, row, col, guess):
+        test_grid = self.grid.copy()
+        self.grid[row,col] = guess
+        if self.all_clear():
+            return self.grid
+        elif not self.all_clear():
+            print("That number cannot go there")
+            self.grid = test_grid
+            return self.grid
+
+
     # Makes sure that a column contains only unique characters
     # Returns True if the column is all unique, False otherwise
     def col_clear(self, col_index):
@@ -101,6 +118,14 @@ class Sudoku:
         return True
 
 
+    # Call rows_cols_clear() and all_quadrants_clear() to make sure whole
+    # board is valid
+    def all_clear(self):
+        if self.all_quadrants_clear() and self.rows_cols_clear():
+            return True
+        return False
+
+
     def game_over(self):
         # If 0 not in grid and all quadrants clear and rowscols clear
         # then return True?
@@ -108,6 +133,5 @@ class Sudoku:
                     (self.rows_cols_clear()):
             return True
         return False
-
 
 
