@@ -23,19 +23,55 @@ def complete_grid():
                               [6,9,1,7,5,4,3,8,2],
                               [4,2,3,8,9,6,5,7,1]])
     return complete_grid
-    
+
+
+# Grid is missing 3 elements at:
+# [0,0], [3,1], [8,8]
+def missing_3():
+    missing_3 = np.array([[0,3,2,5,6,7,9,4,8],
+                          [5,4,6,3,8,9,2,1,7],
+                          [9,7,8,2,4,1,6,3,5],
+                          [2,0,4,9,1,8,7,5,3],
+                          [7,1,5,6,3,2,8,9,4],
+                          [3,8,9,4,7,5,1,2,6],
+                          [8,5,7,1,2,3,4,6,9],
+                          [6,9,1,7,5,4,3,8,2],
+                          [4,2,3,8,9,6,5,7,0]])
+    return missing_3
+
+
+# Grid is missing 1 element at:
+# [5,6] - the valid guess is a 1
+def missing_1():
+    missing_1 = np.array([[1,3,2,5,6,7,9,4,8],
+                          [5,4,6,3,8,9,2,1,7],
+                          [9,7,8,2,4,1,6,3,5],
+                          [2,6,4,9,1,8,7,5,3],
+                          [7,1,5,6,3,2,8,9,4],
+                          [3,8,9,4,7,5,0,2,6],
+                          [8,5,7,1,2,3,4,6,9],
+                          [6,9,1,7,5,4,3,8,2],
+                          [4,2,3,8,9,6,5,7,1]])
+    return missing_3
+
 
 class TestSudoku(unittest.TestCase):
 
     
     # Set up variables that will be needed for tests
     def setUp(self):
-        self.zer_arr = empty_grid()
+        self.zero_arr = empty_grid()
+        self.complete_arr = complete_grid()
+        self.missing_1_arr = missing_1()
         self.g = Sudoku() # Homogenous grid
         self.u = Sudoku() # All-unique grid
-        self.c = Sudoku() # Valid, complete Sudoku grid
+        self.c = Sudoku() # Valid, complete grid
+        self.t = Sudoku() # Partially complete grid - missing 3 #s
+        self.o = Sudoku() # Partially complete grid - missing 1 #
         self.u.grid = unique_grid()
         self.c.grid = complete_grid() 
+        self.t.grid = missing_3()
+        self.o.grid = missing_1()
 
 
     def test_print_grid(self):
@@ -52,20 +88,37 @@ class TestSudoku(unittest.TestCase):
         # Note: Lots of data mutability situations arise in this test.
 
         # Make sure normal guess works
-        self.zer_arr[6,2] = 3
-        np.testing.assert_array_equal(self.g.make_guess(6,2,3), self.zer_arr)
+        self.zero_arr[6,2] = 3
+        np.testing.assert_array_equal(self.g.make_guess(6,2,3), self.zero_arr)
 
         # Make sure guess of 9 works
-        self.zer_arr[3,4] = 9
-        np.testing.assert_array_equal(self.g.make_guess(3,4,9), self.zer_arr)
+        self.zero_arr[3,4] = 9
+        np.testing.assert_array_equal(self.g.make_guess(3,4,9), self.zero_arr)
 
         # Make sure certain guesses are prevented
-        self.assertRaises(Exception, self.g.make_guess, -1,-1, 3) # No neg. indexing
+        self.assertRaises(Exception, self.g.make_guess, -1,-1, 3) # No neg. index
         self.assertRaises(Exception, self.g.make_guess, 9, 9, 3) # 9 isn't valid 
-        self.assertRaises(Exception, self.g.make_guess, 8, 8, 19) # 0 < guess =< 9
+        self.assertRaises(Exception, self.g.make_guess, 8, 8, 19) # 0<guess<=9
         self.assertRaises(Exception, self.g.make_guess, 3, 5, "13") # No str
         self.assertRaises(Exception, self.g.make_guess, 3, 5, 0) # No zero guess 
-     
+    
+
+        # Make sure current numbers can't be changed
+        np.testing.assert_array_equal(complete_grid(),
+                                      self.c.make_guess(2,3,3))
+
+        # Make sure that an element that's a 0 can be changed
+        np.testing.assert_raises(AssertionError, assert_array_equal,
+                                 empty_grid(), 
+                                 self.z.make_guess(4,7,4))
+
+
+        # Make sure that guess is valid
+        # This test gives an invalid guess so make_guess should return 
+        # the grid before the guess was made.j
+        np.testing.assert_array_equal(missing_1_grid(), 
+                                      self.o.make_guess(5,6,8)
+
 
     def test_col_clear(self):
 
@@ -104,13 +157,20 @@ class TestSudoku(unittest.TestCase):
         self.assertTrue(self.c.all_quadrants_clear())
         self.assertFalse(self.g.all_quadrants_clear())
 
+
+    def test_all_clear(self):
+        
+        self.assertTrue(self.c.all_clear())
+        self.assertTrue(self.u.all_clear())
+        self.assertFalse(self.g.all_clear())
+
+
     def test_game_over(self):
         
         self.assertTrue(self.c.game_over())
         self.c.grid[3,4] = 0
         self.assertFalse(self.c.game_over())
         self.assertFalse(self.g.game_over())
-
 
 
 # Allows us to run at command line without extra cmd args
