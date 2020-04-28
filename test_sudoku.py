@@ -87,24 +87,31 @@ class TestSudoku(unittest.TestCase):
 
     def test_make_guess(self):
         # Note: Lots of data mutability situations arise in this test.
+        # Note: A guess of 9,9 is affecting element at row index 8, col index 8
 
         # Make sure normal guess works
         self.missing_3_arr[0,0] = 1
-        np.testing.assert_array_equal(self.t.make_guess(0,0,1), 
+        np.testing.assert_array_equal(self.t.make_guess(1,1,1), 
                                       self.missing_3_arr)
 
-        # Make sure guess of 9 works
+        # Make sure guess of works
         self.missing_3_arr[3,1] = 6
-        np.testing.assert_array_equal(self.t.make_guess(3,1,6), 
+        np.testing.assert_array_equal(self.t.make_guess(4,2,6), 
+                                      self.missing_3_arr)
+
+        # Make sure guessing in the last row/col works
+        self.missing_3_arr[8,8] = 1
+        np.testing.assert_array_equal(self.t.make_guess(9,9,1),
                                       self.missing_3_arr)
 
 
         # Make sure certain guesses are prevented
-        self.assertRaises(Exception, self.z.make_guess, -1,-1, 3) # No neg. index
-        self.assertRaises(Exception, self.z.make_guess, 9, 9, 3) # 9 isn't valid 
+        self.assertRaises(Exception, self.z.make_guess, -1, -1, 3) # No neg. index
+        self.assertRaises(Exception, self.z.make_guess, 10, 10, 3) # 10 is invalid 
         self.assertRaises(Exception, self.z.make_guess, 8, 8, 19) # 0<guess<=9
-        self.assertRaises(Exception, self.z.make_guess, 3, 5, "13") # No str
+        self.assertRaises(Exception, self.z.make_guess, 3, 5, "3") # No str
         self.assertRaises(Exception, self.z.make_guess, 3, 5, 0) # No zero guess 
+        self.assertRaises(Exception, self.c.make_guess, 0, 0, 12) # row/col != 0
     
 
         # Make sure current nonzero numbers can't be changed
@@ -114,9 +121,9 @@ class TestSudoku(unittest.TestCase):
 
         # Make sure that guess is valid
         # This test gives an invalid guess so make_guess should return 
-        # the grid before the guess was made.j
+        # the grid before the guess was made.
         np.testing.assert_array_equal(missing_1(), 
-                                      self.o.make_guess(5,6,8))
+                                      self.o.make_guess(6,7,8))
 
 
     def test_col_clear(self):

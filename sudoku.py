@@ -36,13 +36,14 @@ class Sudoku:
 
     
     # Make sure that row, col and guess are all legal
+    # Guesses are intuitive, a guess of 4 corresponds to the 
+    # 4th row not the 5th. You make a play at a 0th row.
     def make_guess(self, row, col, guess):
-        # Possible reindex row and col to make more sense
-        # to a user...
-        rg = range(0,9)
-        g_rg = range(1,10)
-        if row not in rg or col not in rg or guess not in g_rg:
+        rg = range(1,10)
+        if row not in rg or col not in rg or guess not in rg:
             raise Exception ("Row, col, or guess out of range")
+        row -= 1 
+        col -= 1
         if self.grid[row,col] != 0:
             print("There is already a number there. Go again")
             return self.grid
