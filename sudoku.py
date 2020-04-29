@@ -33,7 +33,6 @@ class Sudoku:
             print(line)
         print(row_sep) # Print last set of dashes
 
-
     
     # Make sure that row, col and guess are all legal
     # Guesses are intuitive, a guess of 4 corresponds to the 
@@ -42,26 +41,61 @@ class Sudoku:
         rg = range(1,10)
         if row not in rg or col not in rg or guess not in rg:
             raise Exception ("Row, col, or guess out of range")
-        row -= 1 
-        col -= 1
-        if self.grid[row,col] != 0:
+        
+        index_row = row - 1 
+        index_col = col - 1
+        if self.grid[index_row, index_col] != 0:
             print("There is already a number there. Go again")
             return self.grid
 
-        return self.check_guess(row, col, guess)
+        return self.check_guess(index_row, index_col, guess)
 
     
     # Make sure that the guess is legal, if it's not, return the previous 
     # version of the grid
-    def check_guess(self, row, col, guess):
-        test_grid = self.grid.copy()
-        self.grid[row,col] = guess
-        if self.all_clear():
+    def check_guess(self, index_row, index_col, guess):
+
+        if self.check_row(index_row, guess) and self.check_col(index_col, guess) and\
+        self.check_quad(index_row, index_col, guess):
+            self.grid[index_row,index_col] = guess
             return self.grid
-        elif not self.all_clear():
+        else:
             print("That number cannot go there")
-            self.grid = test_grid
             return self.grid
+
+
+    # These check_XXX functions are for checking and making sure that 
+    # a guess is legal. The XXX_clear functions are simply for the end
+    # condition. 
+
+
+    # Make sure guess isn't in row
+    def check_row(self, row_index, guess):
+        if guess in self.grid[row_index, :]:
+            return False
+        return True
+
+
+    # Make sure guess isn't in col
+    def check_col(self, col_index, guess):
+        if guess in self.grid[:, col_index]:
+            return False
+        return True
+
+
+    # Get the multiple of 3 that starts the quadrant of any index (row or col)
+    def get_beg_index(self, index):
+        return (index // 3) * 3
+
+
+    # Make sure guess isn't in quadrant 
+    def check_quad(self, row_index, col_index, guess):
+        beg_row = self.get_beg_index(row_index)
+        beg_col = self.get_beg_index(col_index)
+ 
+        if guess in self.grid[beg_row:beg_row + 3, beg_col:beg_col + 3]:
+            return False
+        return True
 
 
     # Makes sure that a column contains only unique characters

@@ -125,6 +125,23 @@ class TestSudoku(unittest.TestCase):
         np.testing.assert_array_equal(missing_1(), 
                                       self.o.make_guess(6,7,8))
 
+    def test_check_row(self):
+        self.t.grid[0] = np.array([0,3,2,5,6,0,0,4,8])
+        self.assertTrue(self.t.check_row(0, 1))
+        self.assertFalse(self.t.check_row(0, 8))
+
+
+    def test_check_col(self):
+        self.t.grid[:,0] = np.array([0,5,9,0,7,3,8,6,0])
+        self.assertTrue(self.t.check_col(0, 1))
+        self.assertFalse(self.t.check_col(0, 8))
+
+
+    def test_check_quad(self):
+        self.t.grid[3:6,3:6] = np.array([[9,0,8],[6,3,2],[4,0,5]])
+        self.assertTrue(self.t.check_quad(3, 4, 1))
+        self.assertFalse(self.t.check_quad(5, 4, 8))
+
 
     def test_col_clear(self):
 
