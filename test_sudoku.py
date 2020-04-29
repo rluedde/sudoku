@@ -26,7 +26,7 @@ def complete_grid():
 
 
 # Grid is missing 3 elements at:
-# [0,0], [3,1], [8,8] - valid guesses are 1, 6, 1
+# [0,0], [3,1], [8,8] - valid answeres are 1, 6, 1
 def missing_3():
     missing_3 = np.array([[0,3,2,5,6,7,9,4,8],
                           [5,4,6,3,8,9,2,1,7],
@@ -41,7 +41,7 @@ def missing_3():
 
 
 # Grid is missing 1 element at:
-# [5,6] - the valid guess is a 1
+# [5,6] - the valid answer is a 1
 def missing_1():
     missing_1 = np.array([[1,3,2,5,6,7,9,4,8],
                           [5,4,6,3,8,9,2,1,7],
@@ -69,6 +69,7 @@ class TestSudoku(unittest.TestCase):
         self.c = Sudoku() # Valid, complete grid
         self.t = Sudoku() # Partially complete grid - missing 3 #s
         self.o = Sudoku() # Partially complete grid - missing 1 #
+        self.z.grid = np.full((9,9),0)
         self.u.grid = unique_grid()
         self.c.grid = complete_grid() 
         self.t.grid = missing_3()
@@ -85,45 +86,45 @@ class TestSudoku(unittest.TestCase):
             self.fail("print_grid() raised an an Exception unexpectedly!")
 
 
-    def test_make_guess(self):
+    def test_make_answer(self):
         # Note: Lots of data mutability situations arise in this test.
-        # Note: A guess of 9,9 is affecting element at row index 8, col index 8
+        # Note: A answer of 9,9 is affecting element at row index 8, col index 8
 
-        # Make sure normal guess works
+        # Make sure normal answer works
         self.missing_3_arr[0,0] = 1
-        np.testing.assert_array_equal(self.t.make_guess(1,1,1), 
+        np.testing.assert_array_equal(self.t.make_answer(1,1,1), 
                                       self.missing_3_arr)
 
-        # Make sure guess of works
+        # Make sure answer of works
         self.missing_3_arr[3,1] = 6
-        np.testing.assert_array_equal(self.t.make_guess(4,2,6), 
+        np.testing.assert_array_equal(self.t.make_answer(4,2,6), 
                                       self.missing_3_arr)
 
-        # Make sure guessing in the last row/col works
+        # Make sure answering in the last row/col works
         self.missing_3_arr[8,8] = 1
-        np.testing.assert_array_equal(self.t.make_guess(9,9,1),
+        np.testing.assert_array_equal(self.t.make_answer(9,9,1),
                                       self.missing_3_arr)
 
 
-        # Make sure certain guesses are prevented
-        self.assertRaises(Exception, self.z.make_guess, -1, -1, 3) # No neg. index
-        self.assertRaises(Exception, self.z.make_guess, 10, 10, 3) # 10 is invalid 
-        self.assertRaises(Exception, self.z.make_guess, 8, 8, 19) # 0<guess<=9
-        self.assertRaises(Exception, self.z.make_guess, 3, 5, "3") # No str
-        self.assertRaises(Exception, self.z.make_guess, 3, 5, 0) # No zero guess 
-        self.assertRaises(Exception, self.c.make_guess, 0, 0, 12) # row/col != 0
+        # Make sure certain answeres are prevented
+        self.assertRaises(Exception, self.z.make_answer, -1, -1, 3) # No neg. index
+        self.assertRaises(Exception, self.z.make_answer, 10, 10, 3) # 10 is invalid 
+        self.assertRaises(Exception, self.z.make_answer, 8, 8, 19) # 0<answer<=9
+        self.assertRaises(Exception, self.z.make_answer, 3, 5, "3") # No str
+        self.assertRaises(Exception, self.z.make_answer, 3, 5, 0) # No zero answer 
+        self.assertRaises(Exception, self.c.make_answer, 0, 0, 12) # row/col != 0
     
 
         # Make sure current nonzero numbers can't be changed
         np.testing.assert_array_equal(complete_grid(),
-                                      self.c.make_guess(2,3,3))
+                                      self.c.make_answer(2,3,3))
 
 
-        # Make sure that guess is valid
-        # This test gives an invalid guess so make_guess should return 
-        # the grid before the guess was made.
+        # Make sure that answer is valid
+        # This test gives an invalid answer so make_answer should return 
+        # the grid before the answer was made.
         np.testing.assert_array_equal(missing_1(), 
-                                      self.o.make_guess(6,7,8))
+                                      self.o.make_answer(6,7,8))
 
     def test_check_row(self):
         self.t.grid[0] = np.array([0,3,2,5,6,0,0,4,8])

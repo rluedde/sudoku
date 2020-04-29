@@ -2,6 +2,8 @@
 #   -An algo that solves a puzzle that you put in
 #   -An algo that creates solvable puzzles
 #       -aka generates a grid
+#   -Two new classes: SudokuGenerator and SudokuSolver
+#   -I'd get to practice with inheritance
 #   -some graphics to make this playable by a user
 #   -Option to choose between 9 unique letters or 9 unique numbers
 #       -Maybe figure out how to use ASCII emojis lol
@@ -16,7 +18,20 @@ class Sudoku:
 
 
     def __init__(self):
+        # have a difficulty here?
+        # for generation just do self.grid = SudokuGenerator.grid
         self.grid = np.full((9,9), 0)
+        self.grid = np.array([[0,3,2,5,6,7,9,4,8],
+                              [5,4,6,3,8,9,2,1,7],
+                              [9,7,8,2,4,1,6,3,5],
+                              [2,0,4,9,1,8,7,5,3],
+                              [7,1,5,6,3,2,8,9,4],
+                              [3,8,9,4,7,5,1,2,6],
+                              [8,5,7,1,2,3,4,6,9],
+                              [6,9,1,7,5,4,3,8,2],
+                              [4,2,3,8,9,6,5,7,0]])
+
+        self.answers = np.count_nonzero(self.grid)
 
     # Have to be careful to not edit self.grid at all (i.e don't 
     # insert any "|")
@@ -34,13 +49,13 @@ class Sudoku:
         print(row_sep) # Print last set of dashes
 
     
-    # Make sure that row, col and guess are all legal
-    # Guesses are intuitive, a guess of 4 corresponds to the 
+    # Make sure that row, col and answer are all legal
+    # Guesses are intuitive, a answer of 4 corresponds to the 
     # 4th row not the 5th. You make a play at a 0th row.
-    def make_guess(self, row, col, guess):
+    def make_answer(self, row, col, answer):
         rg = range(1,10)
-        if row not in rg or col not in rg or guess not in rg:
-            raise Exception ("Row, col, or guess out of range")
+        if row not in rg or col not in rg or answer not in rg:
+            raise Exception ("Row, col, or answer out of range")
         
         index_row = row - 1 
         index_col = col - 1
@@ -48,16 +63,19 @@ class Sudoku:
             print("There is already a number there. Go again")
             return self.grid
 
-        return self.check_guess(index_row, index_col, guess)
+        # If the inputs are valid and the target location is available,
+        # check to see if the row, col or quad already have answer.
+        # We return here for the unit tests - we wouldn't really need a 
+        return self.check_answer(index_row, index_col, answer)
 
     
-    # Make sure that the guess is legal, if it's not, return the previous 
+    # Make sure that the answer is legal, if it's not, return the previous 
     # version of the grid
-    def check_guess(self, index_row, index_col, guess):
+    def check_answer(self, index_row, index_col, answer):
 
-        if self.check_row(index_row, guess) and self.check_col(index_col, guess) and\
-        self.check_quad(index_row, index_col, guess):
-            self.grid[index_row,index_col] = guess
+        if self.check_row(index_row, answer) and self.check_col(index_col, answer) and\
+        self.check_quad(index_row, index_col, answer):
+            self.grid[index_row,index_col] = answer
             return self.grid
         else:
             print("That number cannot go there")
@@ -65,20 +83,20 @@ class Sudoku:
 
 
     # These check_XXX functions are for checking and making sure that 
-    # a guess is legal. The XXX_clear functions are simply for the end
+    # a answer is legal. The XXX_clear functions are simply for the end
     # condition. 
 
 
-    # Make sure guess isn't in row
-    def check_row(self, row_index, guess):
-        if guess in self.grid[row_index, :]:
+    # Make sure answer isn't in row
+    def check_row(self, row_index, answer):
+        if answer in self.grid[row_index, :]:
             return False
         return True
 
 
-    # Make sure guess isn't in col
-    def check_col(self, col_index, guess):
-        if guess in self.grid[:, col_index]:
+    # Make sure answer isn't in col
+    def check_col(self, col_index, answer):
+        if answer in self.grid[:, col_index]:
             return False
         return True
 
@@ -88,12 +106,12 @@ class Sudoku:
         return (index // 3) * 3
 
 
-    # Make sure guess isn't in quadrant 
-    def check_quad(self, row_index, col_index, guess):
+    # Make sure answer isn't in quadrant 
+    def check_quad(self, row_index, col_index, answer):
         beg_row = self.get_beg_index(row_index)
         beg_col = self.get_beg_index(col_index)
  
-        if guess in self.grid[beg_row:beg_row + 3, beg_col:beg_col + 3]:
+        if answer in self.grid[beg_row:beg_row + 3, beg_col:beg_col + 3]:
             return False
         return True
 
@@ -142,7 +160,6 @@ class Sudoku:
 
 
     # Iteratively call quadrant_clear on all 9 quads
-    # True if all quadrants contain uniques, False otherwise
     # Can probably combine this method with rows_cols_clear()
     # Eventually return what quadrant was issue
     def all_quadrants_clear(self):
@@ -163,9 +180,8 @@ class Sudoku:
 
     def game_over(self):
         # If 0 not in grid and all quadrants clear and rowscols clear
-        # then return True?
-        if (0 not in self.grid) & (self.all_quadrants_clear()) &\
-                    (self.rows_cols_clear()):
+        # then return True
+        if (0 not in self.grid) & self.all_clear():
             return True
         return False
 
