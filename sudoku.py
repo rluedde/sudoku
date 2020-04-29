@@ -36,15 +36,17 @@ class Sudoku:
     # Have to be careful to not edit self.grid at all (i.e don't 
     # insert any "|")
     def print_grid(self):
-        row_sep = "-------------"
+        col_guide = "  123 456 789"
+        row_sep = " -------------"
+        print(col_guide)
         for i in range(9):
             # convert each line from an array of ints to a string
             # thru list comprehension(s) 
-            line = "".join([str(element) for element in self.grid[i]])
+            line =  "".join([str(element) for element in self.grid[i]])
             elements_passed = 0
             if i % 3 == 0:
                 print(row_sep)
-            line = f"|{line[0:3]}|{line[3:6]}|{line[6:9]}|"
+            line = str(i + 1) + f"|{line[0:3]}|{line[3:6]}|{line[6:9]}|"
             print(line)
         print(row_sep) # Print last set of dashes
 
