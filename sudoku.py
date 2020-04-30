@@ -10,7 +10,10 @@
 #   -Incorporate a database?
 #       -What games the algo can solve the fastest?
 #       -If I do a UI, store the order of the user's moves?
-#   -Store games on disc somehow so you can come back to an old game!!
+#   -Store games on disc (maybe a cloud db?) 
+#    somehow so you can come back to an old game!!
+#   -Put package on pip? so you could run "sudoku" and the game'd start?
+
 
 import numpy as np
 
