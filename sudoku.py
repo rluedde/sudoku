@@ -10,7 +10,7 @@
 #   -Incorporate a database?
 #       -What games the algo can solve the fastest?
 #       -If I do a UI, store the order of the user's moves?
-#   -Use OOP to represent the game
+#   -Store games on disc somehow so you can come back to an old game!!
 
 import numpy as np
 
