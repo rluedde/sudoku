@@ -106,13 +106,21 @@ class TestSudoku(unittest.TestCase):
                                       self.missing_3_arr)
 
 
+
+        # FIX ME I NEED TO BE ALL ASSERT EQUALSA!!!!
         # Make sure certain answeres are prevented
-        self.assertRaises(Exception, self.z.make_answer, -1, -1, 3) # No neg. index
-        self.assertRaises(Exception, self.z.make_answer, 10, 10, 3) # 10 is invalid 
-        self.assertRaises(Exception, self.z.make_answer, 8, 8, 19) # 0<answer<=9
-        self.assertRaises(Exception, self.z.make_answer, 3, 5, "3") # No str
-        self.assertRaises(Exception, self.z.make_answer, 3, 5, 0) # No zero answer 
-        self.assertRaises(Exception, self.c.make_answer, 0, 0, 12) # row/col != 0
+        # No neg. index
+        np.testing.assert_array_equal(self.z.grid, self.z.make_answer(-1, -1, 3)) 
+        # 10 is invalid 
+        np.testing.assert_array_equal(self.z.grid, self.z.make_answer(10, 10, 3))
+        # 0 < answer <= 9
+        np.testing.assert_array_equal(self.z.grid, self.z.make_answer(8, 8, 19)) 
+        # No string guess
+        np.testing.assert_array_equal(self.z.grid, self.z.make_answer(3, 5, "3"))
+        # No 0 guess
+        np.testing.assert_array_equal(self.z.grid, self.z.make_answer(3, 5, 0)) 
+        # No gueses at 0th row or col
+        np.testing.assert_array_equal(self.c.grid, self.c.make_answer(0, 0, 12)) 
     
 
         # Make sure current nonzero numbers can't be changed

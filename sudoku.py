@@ -57,8 +57,9 @@ class Sudoku:
     def make_answer(self, row, col, answer):
         rg = range(1,10)
         if row not in rg or col not in rg or answer not in rg:
-            raise Exception ("Row, col, or answer out of range")
-        
+            print("Row, col, or answer out of range")
+            return self.grid        
+
         index_row = row - 1 
         index_col = col - 1
         if self.grid[index_row, index_col] != 0:
