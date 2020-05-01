@@ -63,25 +63,24 @@ class Sudoku:
             print("Row, col, or answer out of range")
             return self.grid        
 
-        index_row = row - 1 
-        index_col = col - 1
-        if self.grid[index_row, index_col] != 0:
+        row_index = row - 1 
+        col_index = col - 1
+        if self.grid[row_index, col_index] != 0:
             print("There is already a number there. Go again")
             return self.grid
 
         # If the inputs are valid and the target location is available,
         # check to see if the row, col or quad already have answer.
         # We return here for the unit tests - we wouldn't really need a 
-        return self.check_answer(index_row, index_col, answer)
+        return self.check_answer(row_index, col_index, answer)
 
     
     # Make sure that the answer is legal, if it's not, return the previous 
     # version of the grid
-    def check_answer(self, index_row, index_col, answer):
+    def check_answer(self, row_index, col_index, answer):
 
-        if self.check_row(index_row, answer) and self.check_col(index_col, answer) and\
-        self.check_quad(index_row, index_col, answer):
-            self.grid[index_row,index_col] = answer
+        if self.check_all(row_index, col_index, answer):
+            self.grid[row_index,col_index] = answer
             return self.grid
         else:
             print("That number cannot go there")
@@ -90,7 +89,8 @@ class Sudoku:
 
     # These check_XXX functions are for checking and making sure that 
     # a answer is legal. The XXX_clear functions are simply for the end
-    # condition. 
+    # condition. Their logic gets checked in the tests of make_guess so I don't
+    # think we need more tests for them.
 
 
     # Make sure answer isn't in row
@@ -120,6 +120,14 @@ class Sudoku:
         if answer in self.grid[beg_row:beg_row + 3, beg_col:beg_col + 3]:
             return False
         return True
+
+
+    def check_all(self, row_index, col_index, answer):
+        # Return true if nothing's wrong, return false if something's wrong
+        if self.check_row(row_index, answer) and self.check_col(col_index, answer)\
+        and self.check_quad(row_index, col_index, answer):
+            return True
+        return False
 
 
     # Makes sure that a column contains only unique characters
