@@ -2,15 +2,15 @@ import numpy as np
 from sudoku import Sudoku
 
 
-missing_3 = np.array([[0,3,2,5,6,7,9,4,8],
-                      [5,4,6,3,8,9,2,1,7],
-                      [9,7,8,2,4,1,6,3,5],
-                      [2,0,4,9,1,8,7,5,3],
-                      [7,1,5,6,3,2,8,9,4],
-                      [3,8,9,4,0,5,1,2,6],
-                      [8,5,7,0,2,3,4,6,9],
-                      [6,9,1,0,5,4,3,8,2],
-                      [4,2,3,8,9,6,5,7,0]])
+missing_3 = np.array([[0,3,2,5,6,0,0,4,8],
+                      [5,4,6,0,8,0,2,0,7],
+                      [9,7,0,2,0,0,0,3,5],
+                      [2,0,4,9,1,0,7,0,0],
+                      [0,0,0,6,3,2,0,9,4],
+                      [3,8,9,4,0,5,0,2,6],
+                      [8,5,7,0,2,3,0,6,9],
+                      [6,9,1,0,5,0,0,8,2],
+                      [4,2,3,0,0,0,5,7,0]])
 
 
 class SudokuSolver(Sudoku):
@@ -27,7 +27,7 @@ class SudokuSolver(Sudoku):
         # Get rid of all future guesses and all future tried elements lists
         self.wipe_future(self.spots_solved)
         print(self.spots_solved)
-        print(self.print_grid())
+        self.print_grid()
         row_index = self.get_row_index(self.spots_solved)
         col_index = self.get_col_index(self.spots_solved)
 
@@ -38,8 +38,8 @@ class SudokuSolver(Sudoku):
         # If a cell doesn't have a solution in it, try to get one.
         elif not self.given_elements[row_index, col_index]:
             cell_candidates = self.get_cell_candidates(row_index,
-                                                       col_index,
-                                                       self.tried_elements)
+                                                       col_index)
+            print("candies: ", cell_candidates)
             if len(cell_candidates) == 0:
                 while True:
                     # TODO: potentially set element to 0 in here
@@ -85,11 +85,10 @@ class SudokuSolver(Sudoku):
 
     # Get all of the possible values that a cell can take
     # If we've already tried 
-    def get_cell_candidates(self, row_index, col_index, tried_elements):
+    def get_cell_candidates(self, row_index, col_index):
         candidates = np.arange(1,10)
         for candidate in candidates:
-            if not self.check_all(row_index, col_index, candidate) or\
-            candidate in tried_elements:
+            if not self.check_all(row_index, col_index, candidate):
                 # Array version of list.remove():
                 candidates = np.delete(candidates, 
                                        np.where(candidates == candidate))
