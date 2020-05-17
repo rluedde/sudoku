@@ -13,5 +13,3 @@ python3 run_sudoku.py
 
 PRs are welcome! If you'd like to make a major change, please open an issue. 
 
-There are unit tests, so please update those in unison with changes.
-
