@@ -1,8 +1,6 @@
 import numpy as np
 from sudoku import Sudoku
 from time import sleep
-import sys
-sys.setrecursionlimit(2500)
 
 missing_3 = np.array([[0,3,2,5,6,0,0,4,8],
                       [5,4,6,0,8,0,2,0,7],
@@ -14,7 +12,7 @@ missing_3 = np.array([[0,3,2,5,6,0,0,4,8],
                       [6,9,1,0,5,0,0,8,2],
                       [4,2,3,0,0,0,5,7,0]])
 
-hard_ones = np.array([[0,0,0,0,0,0,0,0,0],
+hard_one =  np.array([[0,0,0,0,0,0,0,0,0],
                       [0,0,0,0,0,3,0,8,5],
                       [0,0,1,0,2,0,0,0,0],
                       [0,0,0,5,0,7,0,0,0],
@@ -67,7 +65,6 @@ class SudokuSolver(Sudoku):
                         break
                 self.wipe_future(self.spots_solved)
                 # self.grid[row_index,col_index] = 0
-                # TODO: clear all future tries
                 self.solve()
             
             # if there's solutions, pick one randomly, record that we've
@@ -166,7 +163,7 @@ class SudokuSolver(Sudoku):
 
 
 
-solv = SudokuSolver(hard_ones)
+solv = SudokuSolver(hard_one)
 solv.solve()
 
 
