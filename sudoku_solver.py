@@ -22,6 +22,11 @@ hard_one =  np.array([[0,0,0,0,0,0,0,0,0],
                       [0,0,2,0,1,0,0,0,0],
                       [0,0,0,0,4,0,0,0,9]])
 
+
+
+
+
+zeros = np.zeros((9,9), dtype = "int32")
 class SudokuSolver(Sudoku):
 
 
@@ -35,18 +40,29 @@ class SudokuSolver(Sudoku):
     def solve(self):
         # Get rid of all future guesses and all future tried elements lists
         self.wipe_future(self.spots_solved)
-        print("\n", self.spots_solved, "\n")
+        print("\n","solved:", self.spots_solved, )
         self.print_grid()
         row_index = self.get_row_index(self.spots_solved)
         col_index = self.get_col_index(self.spots_solved)
 
+        print("tries:", self.tried_elements)
+
+        sleep(.25)
+
         # Exit condition
         if self.spots_solved == 81:
             return self.grid
+        # Improvements:
+        # -Go through and find all spots where the len(candidates) == 1
+        #   fill in that 
+        # cell and then go through and run the recursive backtracker?
+        # -Keep track of trees more efficiently? 
+        # -Xwing
         else: # find a solution or backtrack
             candidates = self.get_cell_candidates(row_index,
-                                                  col_index)
-            # sleep(.5)
+                                                  col_index,
+                                                  self.spots_solved)
+            print("candies:", candidates)
             # if spot's given, move on
             if self.given_elements[row_index,col_index]:
                 self.spots_solved += 1
@@ -55,22 +71,23 @@ class SudokuSolver(Sudoku):
             # if the cell isn't given and has no solutions, backtrack 
             elif not self.given_elements[row_index, col_index] and\
             len(candidates) == 0:
-                print("hi", candidates)
                 # go back to closest cell that's not given
                 while True:
+                    self.reset_curr_cell(self.spots_solved)
+                    if self.spots_solved == 0:
+                        break
                     self.spots_solved -= 1
                     row_index = self.get_row_index(self.spots_solved)
                     col_index = self.get_col_index(self.spots_solved)
+                    self.wipe_future(self.spots_solved)
                     if not self.given_elements[row_index, col_index]:
                         break
-                self.wipe_future(self.spots_solved)
                 # self.grid[row_index,col_index] = 0
                 self.solve()
             
             # if there's solutions, pick one randomly, record that we've
             # tried it
             else:
-                print(candidates)
                 new_element = int(np.random.choice(candidates,1))
                 self.grid[row_index,col_index] = new_element
                 self.spots_solved += 1
@@ -144,13 +161,20 @@ class SudokuSolver(Sudoku):
             row_index = self.get_row_index(i)
             col_index = self.get_col_index(i)
             self.tried_elements[i] = []
-            if not self.given_elements[row_index, col_index]:
-                self.grid[row_index, col_index] = 0
+        
+        
+    def reset_curr_cell(self, spots_solved):
+        row_index = self.get_row_index(spots_solved)
+        col_index = self.get_col_index(spots_solved)
+        if not self.given_elements[row_index, col_index]:
+            self.grid[row_index, col_index] = 0
+
+         
 
 
     # Get all of the possible values that a cell can take
     # TODO: if we've tried a value, it's not a candidate
-    def get_cell_candidates(self, row_index, col_index):
+    def get_cell_candidates(self, row_index, col_index, spots_solved):
         candidates = np.arange(1,10)
         if self.grid[row_index,col_index] != 0:
             return []
@@ -159,7 +183,16 @@ class SudokuSolver(Sudoku):
                 # Array version of list.remove():
                 candidates = np.delete(candidates, 
                                        np.where(candidates == candidate))
-        return candidates
+        # remove all candidates that we've already tried:
+        tries = set(self.tried_elements[self.spots_solved])
+        candidates = set(candidates)
+
+        print("infunc candies:", candidates)
+        print("infunc tries:", tries)
+
+        candidates -= tries
+        
+        return list(candidates)
 
 
 
