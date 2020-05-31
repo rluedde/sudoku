@@ -13,6 +13,8 @@ sudoku =    np.array([[8, 1, 0, 0, 3, 0, 0, 2, 7],
                       [3, 8, 0, 0, 7, 0, 0, 4, 2]])
 
 
+lilrow = np.array([[1,4,0,0,5,3,0,9,0]])
+
 
 zeros = np.zeros((9,9), dtype = "int32")
 class SudokuSolver(Sudoku):
@@ -30,8 +32,9 @@ class SudokuSolver(Sudoku):
     # -Keep track of trees more efficiently? 
     # -Xwing
     def solve(self, spots_solved = 0):
-        self.print_grid()
+        print(self.grid, spots_solved)
 
+        # sleep(.25)
         # This might work if you eliminate possibilities somehow
         if spots_solved == 81:
             return True
@@ -39,6 +42,7 @@ class SudokuSolver(Sudoku):
         row_index = self.get_row_index(spots_solved)
         col_index = self.get_col_index(spots_solved)
 
+        # if we need to solve a cell
         if self.grid[row_index, col_index] == 0:
 
             candidates = self.get_cell_candidates(row_index, col_index)
@@ -49,9 +53,10 @@ class SudokuSolver(Sudoku):
                 if self.solve(spots_solved + 1):
                     return True
 
-                self.grid[row_index, col_index] = 0
+                else:
+                    self.grid[row_index, col_index] = 0
 
-        else:
+        else: # if the cell is already filled in, move on
             self.solve(spots_solved + 1)
 
         return False
@@ -68,8 +73,6 @@ class SudokuSolver(Sudoku):
     # Get all of the possible values that a cell can take
     def get_cell_candidates(self, row_index, col_index):
         candidates = np.arange(1,10)
-        if self.grid[row_index,col_index] != 0:
-            return []
         for candidate in candidates:
             if not self.check_all(row_index, col_index, candidate):
                 # Array version of list.remove():
