@@ -1,13 +1,16 @@
+import getInputArray from './ui.js'
+
+
 var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
 var grid = [[0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
             [0,0,3,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,3,0,0,0,0],
+            [0,0,0,0,0,0,9,0,0],
+            [0,0,0,0,3,0,0,4,0],
             [9,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,1],
             [0,0,0,0,1,0,0,0,0]]
 const width = 70
 
@@ -34,27 +37,17 @@ function drawGridLines() {
     }
 }
 
-function drawCell(i, j, value, given) {
-    //row
-    this.i = i;
-    //col
-    this.j = j;
-    this.given = given;
-    this.value = value;
-    // ctx.beginPath()
-    if (given) {
-        ctx.font = "40px Apercu Mono"
+export default function drawCell(i, j, value, given) {
+    if (value !== 0) {
+        if (given) {
+            ctx.font = "100 50px Arial"
+        }
+        else {
+            ctx.font = "900 50px Arial"
+        }
+        ctx.strokeText(String(value), j * width + 21, i * width + 52)
+        ctx.stroke()
     }
-    else {
-        ctx.font = "50px Apercu Mono"
-    }
-
-    ctx.strokeText(String(value), j * width + 23, i * width + 52)
-    ctx.stroke()
-
-    
-    // if given, draw number bolded
-    // else, draw shit normal
 
 }
 
@@ -64,17 +57,23 @@ function populateGrid() {
     for(var i = 0; i < 9; i++){
         for(var j = 0; j < 9; j++) {
             const grid_value = grid[i][j]
-            console.log(i,j)
-            given = true  
+            const given = true  
             drawCell(i, j, grid_value, given)
         }
     }
 
 }
 
+const button = document.getElementById("make_guess")
+
+button.onclick = function updateGrid() {
+    const input = getInputArray()
+    drawCell(...input, false)
+}
 
 drawGridLines()
 populateGrid()
+// updateGrid()
 // while the game isn't over, get guesses and make those guesses
 // non-bold (no idea how to get guesses here)
 

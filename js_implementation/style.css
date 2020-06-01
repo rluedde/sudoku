@@ -5,8 +5,7 @@
 body {
   background-color: #333;
   color: #fff;
-  display: flex;
-  flex-direction: column;
+  display: flex; 
   align-items: center;
   justify-content: center;
   font-family: Arial, Helvetica, sans-serif;
@@ -14,11 +13,39 @@ body {
   margin: 0;
 }
 
+.instructions {
+  width: 500px;
+  height: 630px;
+  background: white;
+  margin: 10px;
+  border: solid 8px black;
+  border-radius: 5px;
+  color: black;
+}
+
+.heading {
+  display:block;
+  height:46px;
+  color: black;
+  text-align: center;
+}
+
+
 #canvas {
   background: #f0f0f0;
   border-radius: 5px;
+  border: solid 5px black;
+  width: 630px;
+  height: 630px;
+  margin: 10px
 }
 
-#source {
-  display: none;
+.header {
+  margin: 10 auto;
+  padding: 0 auto;
+  display: block;
+}
+
+#ui {
+  background-color: #612428
 }
