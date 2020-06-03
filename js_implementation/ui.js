@@ -20,26 +20,25 @@ function getGivenBoolArray(grid) {
 }
 
 
-// should use bool array to determine
-function eraseNumber(i, j) {
-    pass
+function eraseCell(i, j) {
+    // use bool array to not erase givens
+    console.log(i, j)
+    i++
+    j++
+    ctx.clearRect(j * 70 - 62, i * 70 - 65, 55, 55)
 }
 
 const guess_button = document.getElementById("make_guess")
 
 guess_button.onclick = function updateGrid() {
-    const input = getInputArray()
-    drawCell(...input, false)
-}
-
-const erase_button = document.getElementById("erase_guess")
-
-erase_button.onclick = function eraseCell() {
-    // use bool array to not erase givens
-    let i, j, dummy
-    [i, j, dummy] = getInputArray();
-    console.log(i, j)
-    i++
-    j++
-    ctx.clearRect(j * 70 - 62, i * 70 - 65, 55, 55)
+    let i, j, value
+    [i, j, value] = getInputArray() 
+    let givenBoolArray = getGivenBoolArray(grid)
+    if (givenBoolArray[i][j]) {
+        alert("You can't guess there!")
+    }
+    else {
+        eraseCell(i, j)
+        drawCell(i, j, value, false)
+    }
 }
