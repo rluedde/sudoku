@@ -32,7 +32,7 @@ body {
 
 
 #canvas {
-  background: #f0f0f0;
+  background: white;
   border-radius: 5px;
   border: solid 5px black;
   width: 630px;

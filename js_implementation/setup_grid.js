@@ -1,19 +1,22 @@
-import getInputArray from './ui.js'
-
-
 var c = document.getElementById("canvas");
-var ctx = c.getContext("2d");
-var grid = [[0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,3,0,0,0,0,0,0],
-            [0,0,0,0,0,0,9,0,0],
-            [0,0,0,0,3,0,0,4,0],
-            [9,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,1],
-            [0,0,0,0,1,0,0,0,0]]
+export var ctx = c.getContext("2d");
+export var grid =  [[0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0],
+                    [0,0,3,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,9,0,0],
+                    [0,0,0,0,3,0,0,4,0],
+                    [9,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0,1],
+                    [0,0,0,0,1,0,0,0,0]]
 const width = 70
 
+//draw background - neccessary for erasing
+function drawBackGround() {
+    ctx.beginPath();
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, c.width, c.height);
+}
 
 function drawGridLines() {
     for(var i = 0; i < 10; i++) {
@@ -37,7 +40,7 @@ function drawGridLines() {
     }
 }
 
-export default function drawCell(i, j, value, given) {
+export function drawCell(i, j, value, given) {
     if (value !== 0) {
         if (given) {
             ctx.font = "100 50px Arial"
@@ -64,13 +67,7 @@ function populateGrid() {
 
 }
 
-const button = document.getElementById("make_guess")
-
-button.onclick = function updateGrid() {
-    const input = getInputArray()
-    drawCell(...input, false)
-}
-
+drawBackGround()
 drawGridLines()
 populateGrid()
 // updateGrid()
