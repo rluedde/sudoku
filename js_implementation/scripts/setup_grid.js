@@ -3,8 +3,10 @@ export var ctx = c.getContext("2d");
 const width = 70
 
 export function newGrid() {
+    //TODO: call a generation algorithm or something to 
+    // generate a new board here. 
     return  [[0,5,6,2,1,4,7,3,9],
-             [1,9,3,5,7,6,8,4,2],
+             [1,9,3,0,7,6,8,4,2],
              [2,4,7,9,8,3,1,6,5],
              [4,6,2,7,5,9,3,8,1],
              [9,3,1,8,6,2,4,5,7],
@@ -72,6 +74,15 @@ export function populateGrid(grid) {
     }
 
 }
+
+export function setupGrid(grid) {
+    var grid = newGrid()
+    drawBackGround()
+    drawGridLines()
+    populateGrid(grid)
+    return grid
+}
+
 
 // while the game isn't over, get guesses and make those guesses
 // non-bold (no idea how to get guesses here)
