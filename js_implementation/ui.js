@@ -1,7 +1,6 @@
-import {drawCell, grid, ctx} from "./setup_grid.js"
+import {ctx} from "./setup_grid.js"
 
-
-function getInputArray() {
+export function getInputArray() {
     const row = document.getElementById('row').value;
     const col = document.getElementById('col').value;
     const value = document.getElementById('value').value;
@@ -9,8 +8,9 @@ function getInputArray() {
 }
 
 
-function getGivenBoolArray(grid) {
+export function getGivenBoolArray(grid) {
     const boolArr = []
+    console.log(grid.length)
     for (var i = 0; i < grid.length; i++) {
         row = grid[i]
         const bool_row = row.map(val => val === 0 ? false : true)
@@ -19,26 +19,9 @@ function getGivenBoolArray(grid) {
     return boolArr
 }
 
-
-function eraseCell(i, j) {
-    // use bool array to not erase givens
-    console.log(i, j)
+// erase the number at the ith row and jth column
+export function eraseCell(i, j) {
     i++
     j++
     ctx.clearRect(j * 70 - 62, i * 70 - 65, 55, 55)
-}
-
-const guess_button = document.getElementById("make_guess")
-
-guess_button.onclick = function updateGrid() {
-    let i, j, value
-    [i, j, value] = getInputArray() 
-    let givenBoolArray = getGivenBoolArray(grid)
-    if (givenBoolArray[i][j]) {
-        alert("You can't guess there!")
-    }
-    else {
-        eraseCell(i, j)
-        drawCell(i, j, value, false)
-    }
 }
