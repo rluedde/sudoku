@@ -73,10 +73,6 @@ export function populateGrid(grid) {
 
 }
 
-//drawBackGround()
-//drawGridLines()
-//populateGrid()
-// updateGrid()
 // while the game isn't over, get guesses and make those guesses
 // non-bold (no idea how to get guesses here)
 
