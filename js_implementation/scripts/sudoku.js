@@ -4,7 +4,7 @@ export function gameOver(grid) {
         if (!checkForZeros(grid[i]) ||
             !checkRow(grid[i]) ||
             !checkCol(grid, i) ||
-            !checkQuad(i)) {
+            !checkQuad(grid, i)) {
                 return false
             } 
     }
@@ -35,10 +35,18 @@ function checkCol(grid, col_index) {
     return allUnique(col)
 }
 
-function checkQuad(index) {
-    return true
+function checkQuad(grid, index) {
+    const beg_row = Math.floor(index/3) * 3
+    const beg_col = (index % 3) * 3
+    // construct array with eleemnts from index-th quadrant
+    var quad = []
+    for (var i = 0; i < 3; i++) {
+        row = grid[beg_row + i]
+        const quad_piece = row.slice(beg_col, beg_col + 3)
+        quad.push(...quad_piece)
+    }
+    return allUnique(quad)
 }
-
 
 // callback function that returns if the index of a value of 
 // an array is equal to the index. It will return false if there

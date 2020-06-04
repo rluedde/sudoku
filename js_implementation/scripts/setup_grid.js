@@ -6,7 +6,7 @@ export function newGrid() {
     //TODO: call a generation algorithm or something to 
     // generate a new board here. 
     return  [[0,5,6,2,1,4,7,3,9],
-             [1,9,3,0,7,6,8,4,2],
+             [1,9,3,5,7,6,8,4,2],
              [2,4,7,9,8,3,1,6,5],
              [4,6,2,7,5,9,3,8,1],
              [9,3,1,8,6,2,4,5,7],
