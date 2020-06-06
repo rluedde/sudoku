@@ -9,7 +9,11 @@
               content="ie=edge"/>
         <title>Sudoku!</title>
         <link rel="stylesheet" href="style.css"/>
-
+        <script type="module" src="scripts/index.js"></script>
+        <script type="module" src="scripts/access_token.js"></script>
+        <!--
+        <script type="module" data-main="scripts/index" src="scripts/require.js"></script>  
+        -->
     </head>
 
     <header class="header"><h1>hiiii</h1></header>
@@ -26,16 +30,21 @@
                     The game will only alert you when you have a completed board;
                     it will let you place numbers where they can't actually go
                     </li>
+                    <li>
+                    You can save your current game by clicking "save game", saving the string of 
+                    numbers somehow (text file, word doc, etc). When you come back, you'll be able to
+                    paste that string into "load game"
+
+                    </li>
                 </ul>
             </section>
             <section>
                 <h1 class="heading">How to Play</h1>
- 
-            </section>
-            <ol>
+             <ol>
                 <li>Select a number from the selector below </li>
                 <li>Select what row and column you'd like to place that digit at</li>
             </ol>
+            </section>
 
             <section id="ui">
                 <h1 class="heading">Controls</h1>
@@ -79,9 +88,13 @@
                     </select>
 
                     <button id="make_guess">Make Guess</button>
+                    <button id="save_game">Save Game</button>
+                    <button id="load_game">Load Game</button>
+
                 </section>
+
         </div>
-        <script type="module" src="scripts/index.js"></script>
+        <div id="demo"></div>
         <canvas id="canvas" width="630" height="630"></canvas>
     </body>
 

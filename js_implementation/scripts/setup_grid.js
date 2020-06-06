@@ -75,7 +75,7 @@ export function populateGrid(grid) {
 
 }
 
-export function setupGrid(grid) {
+export function setupGrid() {
     var grid = newGrid()
     drawBackGround()
     drawGridLines()
