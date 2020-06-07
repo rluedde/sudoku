@@ -17,7 +17,9 @@
 
     <body>
         <!-- TODO: toss a heading on top of everything, not to the left....-->
-        <div class="instructions">
+        <header class="divtheme"><h1 class="heading">Welcome to Sudoku!</h1></header>
+        <div class="notheader">
+        <div class="divtheme" id="instructions">
             <section>
                 <h1 class="heading">Information</h1>
                 <ul>
@@ -52,50 +54,53 @@
                     <button id="load_game">Load Game</button>
 
                 <h1 class="heading">Controls</h1>
-                    <select id="value">
-                        <option value="" selected="selected">Select value to guess:</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                    </select>
+                    <div id="controls">
+                        <select id="value">
+                            <option value="" selected="selected">Select value to guess:</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
 
-                    <select id="row">
-                        <option value="" selected="selected">Select a row:</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                    </select>
-                
-                    <select id="col">
-                        <option value="" selected="selected">Select a column:</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                    </select>
+                        <select id="row">
+                            <option value="" selected="selected">Select a row:</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    
+                        <select id="col">
+                            <option value="" selected="selected">Select a column:</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                        </select>
+                    </div>
 
                     <button id="make_guess">Make Guess</button>
 
                 </section>
         </div>
         <canvas id="canvas" width="630" height="630"></canvas>
+        </div>
     </body>
 
 
