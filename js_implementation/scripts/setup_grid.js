@@ -5,16 +5,16 @@ export var ctx = c.getContext("2d");
 const width = 70
 
 export function newGrid() {
-    //TODO: call a generation algorithm or something to 
+    //TODO: call a generation algorithm to 
     // generate a new board here. 
     return  [[0,5,6,2,1,4,7,3,9],
              [1,9,3,5,7,6,8,4,2],
              [2,4,7,9,8,3,1,6,5],
              [4,6,2,7,5,9,3,8,1],
-             [9,3,1,8,6,2,4,5,7],
+             [9,3,0,8,6,2,4,5,7],
              [7,8,5,3,4,1,9,2,6],
              [6,2,4,1,9,8,5,7,3],
-             [3,7,9,4,2,5,6,1,8],
+             [3,7,9,4,2,0,6,1,8],
              [5,1,8,6,3,7,2,9,4]]
 }
 
@@ -48,6 +48,7 @@ export function drawGridLines() {
     }
 }
 
+
 export function drawCell(i, j, value, given, grid) {
     if (value !== 0) {
         if (given) {
@@ -77,6 +78,8 @@ export function populateGrid(grid) {
 
 }
 
+
+// draw the grid with lines in differing bolding
 export function setupGrid(givenGrid = -1) {
     let grid
     // in the case that the user doesn't specify a gridString,
@@ -94,14 +97,3 @@ export function setupGrid(givenGrid = -1) {
     populateGrid(grid)
     return grid
 }
-
-
-// while the game isn't over, get guesses and make those guesses
-// non-bold (no idea how to get guesses here)
-
-
-
-
-
-
-

@@ -16,90 +16,92 @@
     </head>
 
     <body>
-        <!-- TODO: toss a heading on top of everything, not to the left....-->
-        <header class="divtheme"><h1 class="heading">Welcome to Sudoku!</h1></header>
+        <header class="divtheme"><h1 class="heading">Sudoku! - play a game or watch a solving algorithm!</h1></header>
         <div class="notheader">
-        <div class="divtheme" id="instructions">
-            <section>
-                <h1 class="heading">Information</h1>
-                <ul>
-                    <li>
-                    Numbers that are solid bold are given and numbers that
-                    are hollow are your guesses
-                    </li>
-                    <li>
-                    The game will only alert you when you have a completed board;
-                    it will let you place numbers where they can't actually go
-                    </li>
-                    <li>
-                    You can save your current game by clicking "save game", saving the string of 
-                    numbers somehow (text file, word doc, etc). When you come back, you'll be able to
-                    paste that string into "load game"
-
-                    </li>
-                </ul>
-            </section>
-            
-            <section>
-                <h1 class="heading">How to Play</h1>
-             <ol>
-                <li>Select a number from the selector below </li>
-                <li>Select what row and column you'd like to place that digit at</li>
-            </ol>
-            </section>
-
-            <section id="ui">
-                <h1 class="heading">Setup game</h1>
-                    <button id="save_game">Save Game</button>
-                    <button id="load_game">Load Game</button>
-
-                <h1 class="heading">Controls</h1>
-                    <div id="controls">
-                        <select id="value">
-                            <option value="" selected="selected">Select value to guess:</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                        </select>
-
-                        <select id="row">
-                            <option value="" selected="selected">Select a row:</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                        </select>
-                    
-                        <select id="col">
-                            <option value="" selected="selected">Select a column:</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                        </select>
-                    </div>
-
-                    <button id="make_guess">Make Guess</button>
-
+            <div class="divtheme" id="instructions">
+                <section>
+                    <h1 class="heading">Information</h1>
+                    <ul>
+                        <li>
+                        Numbers that are solid bold are given and numbers that
+                        are hollow are your guesses
+                        </li>
+                        <li>
+                        The game will only alert you when you have a completed board;
+                        it will let you place numbers where they can't actually go
+                        </li>
+                        <li>
+                        You can save your current game by clicking "save game", saving the string of 
+                        numbers somehow (text file, word doc, etc). When you come back, you'll be able to
+                        paste that string into "load game"
+                        </li>
+                    </ul>
                 </section>
-        </div>
-        <canvas id="canvas" width="630" height="630"></canvas>
+
+                <section id="ui">
+                    <h1 class="heading">Setup</h1>
+                        <button id="save_game">Save Game</button>
+                        <button id="load_game">Load Game</button>
+
+                    <h1 class="heading">Game Controls</h1>
+                        <div id="controls">
+                            <select id="value">
+                                <option value="" selected="selected">Select value to guess:</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+
+                            <select id="row">
+                                <option value="" selected="selected">Select a row:</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        
+                            <select id="col">
+                                <option value="" selected="selected">Select a column:</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        </div>
+
+                        <button id="make_guess">Make Guess</button>
+                    <h1 class="heading">Solver</h1>
+                        <ul>
+                            <li>If you choose to activate the solver, it will solve your current
+                                board from its beginning state. 
+                            </li>
+                            <li>
+                                Save the game before activating the solver if you want to play this
+                                game again.
+                            </li>
+                        </ul>
+                        <button id="save_game">Save Game</button>
+                        <button id="load_game">Load Game</button>
+
+
+            </div>
+            <canvas id="canvas" width="630" height="630"></canvas>
         </div>
     </body>
 

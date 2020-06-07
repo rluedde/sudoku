@@ -25,8 +25,6 @@ guessButton.onclick = function updateGrid() {
     if (!givenBoolArray[i][j]) {
         eraseCell(i, j)
         grid = drawCell(i, j, parseInt(value), false, grid)
-        // TODO: generate some sort of hash right here and use that as
-        // part of the URL for a certain game
         if (gameOver(grid)) {
             alert("You won! Good work.")
             grid = setupGrid() 
