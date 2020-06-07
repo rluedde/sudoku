@@ -10,14 +10,13 @@
         <title>Sudoku!</title>
         <link rel="stylesheet" href="style.css"/>
         <script type="module" src="scripts/index.js"></script>
-        <script type="module" src="scripts/access_token.js"></script>
         <!--
         <script type="module" data-main="scripts/index" src="scripts/require.js"></script>  
         -->
     </head>
 
-    <header class="header"><h1>hiiii</h1></header>
     <body>
+        <!-- TODO: toss a heading on top of everything, not to the left....-->
         <div class="instructions">
             <section>
                 <h1 class="heading">Information</h1>
@@ -38,6 +37,7 @@
                     </li>
                 </ul>
             </section>
+            
             <section>
                 <h1 class="heading">How to Play</h1>
              <ol>
@@ -47,6 +47,10 @@
             </section>
 
             <section id="ui">
+                <h1 class="heading">Setup game</h1>
+                    <button id="save_game">Save Game</button>
+                    <button id="load_game">Load Game</button>
+
                 <h1 class="heading">Controls</h1>
                     <select id="value">
                         <option value="" selected="selected">Select value to guess:</option>
@@ -88,13 +92,9 @@
                     </select>
 
                     <button id="make_guess">Make Guess</button>
-                    <button id="save_game">Save Game</button>
-                    <button id="load_game">Load Game</button>
 
                 </section>
-
         </div>
-        <div id="demo"></div>
         <canvas id="canvas" width="630" height="630"></canvas>
     </body>
 

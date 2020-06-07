@@ -1,3 +1,5 @@
+import {getGrid} from "./access_token.js"
+
 var c = document.getElementById("canvas");
 export var ctx = c.getContext("2d");
 const width = 70
@@ -75,8 +77,18 @@ export function populateGrid(grid) {
 
 }
 
-export function setupGrid() {
-    var grid = newGrid()
+export function setupGrid(givenGrid = -1) {
+    let grid
+    // in the case that the user doesn't specify a gridString,
+    // just build them their own - eventually newGrid() will 
+    // contain a backtracking generation algorithm
+    if (givenGrid === -1) {
+        grid = newGrid()
+
+    } else {
+        // in the case that the user comes prepared with their own gridString
+        grid = getGrid(givenGrid)
+    }
     drawBackGround()
     drawGridLines()
     populateGrid(grid)
