@@ -1,15 +1,13 @@
 # sudoku
 
-sudoku is a simple CLI game of the game sudoku. 
+Web app of the popular puzzle game with backtracking solving/board generation algorithm.
 
-## Installation
+## To Use
 
-Simply clone the repository from github. To start the game, navigate 
-to your local copy and run 
-```python
-python3 run_sudoku.py
-```
+1. `git clone https://github.com/rluedde/sudoku/edit/master/README.md` (or just download repository)
+2. Open `index.html` in a web brower (all browsers should be supported)!
+
 ## Contributing
 
-PRs are welcome! If you'd like to make a major change, please open an issue. 
+PRs are welcome! If you'd like to make a change, please open an issue. 
 
