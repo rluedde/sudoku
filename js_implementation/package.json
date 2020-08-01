@@ -1,0 +1,14 @@
+{
+  "name": "js_implementation",
+  "version": "1.0.0",
+  "description": "web implementation of sudoku",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^3.5.0"
+  }
+}

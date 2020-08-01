@@ -1,4 +1,4 @@
-import {getGrid} from "./access_token.js"
+import {getGrid} from "./save_game.js"
 
 var c = document.getElementById("canvas");
 export var ctx = c.getContext("2d");
